@@ -221,8 +221,8 @@ export default function MenuCard() {
               value={formData.number}
               onChange={handleChange}
               inputMode="numeric"
-              maxLength="10"
-              minLength="10"
+              maxLength={10}
+              minLength={10}
             />
      <input
   type="tel"
@@ -231,7 +231,7 @@ export default function MenuCard() {
   name="DOB"
   required
   inputMode="numeric"
-  maxLength="10"
+  maxLength={10}
   value={formData.DOB}  // ✅ Connects DOB to formData
   onChange={(e) => {
     let value = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
