@@ -213,6 +213,18 @@ export default function MenuCard() {
               onChange={handleChange}
             />
             <input
+              type="tel"
+              className="border border-gray-300 m-2 h-[55px] w-[300px] md:w-[350px] p-2 rounded-[8px]"
+              placeholder="Contact Number"
+              name="number"
+              required
+              value={formData.number}
+              onChange={handleChange}
+              inputMode="numeric"
+              maxLength={10}
+              minLength={10}
+            />
+      <input
   type="tel"
   className="border border-gray-300 m-2 h-[55px] w-[300px] md:w-[350px] p-2 rounded-[8px]"
   placeholder="DD-MM-YYYY"
@@ -248,6 +260,9 @@ export default function MenuCard() {
     setFormData((prev) => ({ ...prev, DOB: formattedValue })); // ✅ Update State
   }}
 />
+
+
+
 
 
             <button type="submit" className="bg-green-500 m-2 h-[55px] w-[300px] p-2 rounded-[8px] md:w-[350px] text-white uppercase font-[600]">
