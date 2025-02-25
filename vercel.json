@@ -1,9 +1,14 @@
 {
-    "rewrites": [
-      {
-        "source": "/(.*)",
-        "destination": "/"
-      }
-    ]
-  }
-  
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/menucard/(.*)",
+      "dest": "/menucard/[categoryId].js"
+    }
+  ]
+}
