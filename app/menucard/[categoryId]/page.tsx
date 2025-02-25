@@ -307,11 +307,12 @@ export default function MenuCard() {
                     {product.arrays.arrayOne[0] ? <img src={`${IMAGE_BASE_URL}${product.arrays.arrayOne[0]}`} alt={product.title || "Dish"} className="min-w-[120px] min-h-[120px] max-h-[120px] max-w-[120px] object-cover rounded-full mr-4" /> : <div className="min-w-[120px] min-h-[120px] max-h-[120px] max-w-[120px] rounded-full bg-[#ffd4b22b] text-[#704828] flex items-center justify-center text-2xl font-semibold mr-4">{getInitials(product.title)}</div>}
                     <div className="flex w-full justify-between items-center w-[100%]">
                       <div className="w-[100%] relative">
-                        <h3 className="md:text-xl text-[16px] capitalize text-black mr-[24px] font-semibold">
-                          {product.title
-                            .toLowerCase()
-                            .replace(/\b\w/g, (char) => char.toUpperCase())}
-                        </h3>
+                      <h3 className="md:text-xl text-[16px] capitalize text-black mr-[24px] font-semibold">
+  {product.title
+    ?.toLowerCase() // ✅ Won't run if `product.title` is null
+    .replace(/\b\w/g, (char) => char.toUpperCase()) || "Untitled"} {/* ✅ Default value */}
+</h3>
+
                         <div className="flex justify-between items-center w-[100%]">
                           <p className="text-[16px] w-[100%] text-[#ac804c]">₹{product.numbers?.numberOne}</p>
                           {product.featureType === "666a87cda9d9239927d47193" ? (
