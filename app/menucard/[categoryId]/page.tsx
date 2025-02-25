@@ -233,36 +233,37 @@ export default function MenuCard() {
   inputMode="numeric"
   maxLength={10}
   value={formData.DOB}  // ✅ Connects DOB to formData
-  onChange={(e) => {
+  onInput={(e) => {
     let value = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
     if (value.length > 8) value = value.slice(0, 8); // Restrict to 8 digits
-
+  
     let day = value.slice(0, 2);
     let month = value.slice(2, 4);
     let year = value.slice(4);
-
+  
+    // Convert to numbers for validation
+    let dayNum = Number(day);
+    let monthNum = Number(month);
+    let yearNum = Number(year);
+  
     // Ensure valid day (1-31)
-    if (day > 31) day = "31";
-    if (day === "00") day = "01"; // Prevents 00
-
+    if (dayNum > 31) dayNum = 31;
+    if (dayNum === 0) dayNum = 1; // Prevents 00
+  
     // Ensure valid month (1-12)
-    if (month > 12) month = "12";
-    if (month === "00") month = "01"; // Prevents 00
-
+    if (monthNum > 12) monthNum = 12;
+    if (monthNum === 0) monthNum = 1; // Prevents 00
+  
     // Ensure valid year (up to 2025)
-    if (year > 2025) year = "2025";
-
-    let formattedValue = day;
-    if (month) formattedValue += `-${month}`;
-    if (year) formattedValue += `-${year}`;
-
-    e.target.value = formattedValue; 
-
-    // ✅ Update formData
-    handleChange({
-      target: { name: "DOB", value: formattedValue }
-    });
+    if (yearNum > 2025) yearNum = 2025;
+  
+    // Convert back to string with leading zeros if needed
+    let formattedValue = `${dayNum.toString().padStart(2, "0")}-${monthNum.toString().padStart(2, "0")}`;
+    if (year) formattedValue += `-${yearNum}`;
+  
+    e.target.value = formattedValue;
   }}
+  
 />
 
 
