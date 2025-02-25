@@ -138,10 +138,12 @@ export default function MenuCard() {
 
   useEffect(() => {
     if (categoryId) {
-      fetchProducts(categoryId).then(setProducts).catch(console.error);
-      fetchSubCategories(categoryId).then(setSubCategories).catch(console.error);
+      const id = Array.isArray(categoryId) ? categoryId[0] : categoryId; // ✅ Convert array to string
+      fetchProducts(id).then(setProducts).catch(console.error);
+      fetchSubCategories(id).then(setSubCategories).catch(console.error);
     }
   }, [categoryId]);
+  
 
   const filteredProducts = products.filter((product) =>
     (!showVegOnly || product.featureType === "666a87cda9d9239927d47193") &&
