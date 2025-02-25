@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 
 interface Product {
-  id: number;
+  _id: number;
   title: string | null;
   description: string | null;
   price: number;
