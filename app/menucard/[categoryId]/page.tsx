@@ -237,10 +237,10 @@ export default function MenuCard() {
     let value = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
     if (value.length > 8) value = value.slice(0, 8); // Restrict to 8 digits
   
-    let day = value.slice(0, 2);
-    let month = value.slice(2, 4);
-    let year = value.slice(4);
-  
+  const day = value.slice(0, 2);
+const month = value.slice(2, 4);
+const year = value.slice(4);
+
     // Convert to numbers for validation
     let dayNum = Number(day);
     let monthNum = Number(month);
