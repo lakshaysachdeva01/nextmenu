@@ -213,18 +213,6 @@ export default function MenuCard() {
               onChange={handleChange}
             />
             <input
-              type="tel"
-              className="border border-gray-300 m-2 h-[55px] w-[300px] md:w-[350px] p-2 rounded-[8px]"
-              placeholder="Contact Number"
-              name="number"
-              required
-              value={formData.number}
-              onChange={handleChange}
-              inputMode="numeric"
-              maxLength={10}
-              minLength={10}
-            />
-     <input
   type="tel"
   className="border border-gray-300 m-2 h-[55px] w-[300px] md:w-[350px] p-2 rounded-[8px]"
   placeholder="DD-MM-YYYY"
@@ -232,35 +220,34 @@ export default function MenuCard() {
   required
   inputMode="numeric"
   maxLength={10}
-  value={formData.DOB}  // ✅ Connects DOB to formData
-  onInput={(e) => {
-    const target = e.target as HTMLInputElement; // ✅ Type Assertion
-    let value = target.value.replace(/\D/g, ""); // ✅ Now TypeScript recognizes `value`
-    
+  value={formData.DOB} // ✅ Keep input controlled
+  onChange={(e) => {
+    let value = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+
     if (value.length > 8) value = value.slice(0, 8); // Restrict to 8 digits
-  
-    const day = value.slice(0, 2);
-    const month = value.slice(2, 4);
-    const year = value.slice(4);
-  
+
+    let day = value.slice(0, 2);
+    let month = value.slice(2, 4);
+    let year = value.slice(4);
+
     // Ensure valid day (1-31)
-    if (parseInt(day) > 31) value = "31" + month + year;
-    if (day === "00") value = "01" + month + year;
-  
+    if (parseInt(day) > 31) day = "31";
+    if (day === "00") day = "01";
+
     // Ensure valid month (1-12)
-    if (parseInt(month) > 12) value = day + "12" + year;
-    if (month === "00") value = day + "01" + year;
-  
+    if (parseInt(month) > 12) month = "12";
+    if (month === "00") month = "01";
+
     // Ensure valid year (up to 2025)
-    if (parseInt(year) > 2025) value = day + month + "2025";
-  
-    target.value = value; // ✅ Update input field
+    if (year.length === 4 && parseInt(year) > 2025) year = "2025";
+
+    let formattedValue = day;
+    if (month) formattedValue += `-${month}`;
+    if (year) formattedValue += `-${year}`;
+
+    setFormData((prev) => ({ ...prev, DOB: formattedValue })); // ✅ Update State
   }}
-  
 />
-
-
-
 
 
             <button type="submit" className="bg-green-500 m-2 h-[55px] w-[300px] p-2 rounded-[8px] md:w-[350px] text-white uppercase font-[600]">
