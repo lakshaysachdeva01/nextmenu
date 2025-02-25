@@ -227,7 +227,7 @@ export default function MenuCard() {
       <input
   type="tel"
   className="border border-gray-300 m-2 h-[55px] w-[300px] md:w-[350px] p-2 rounded-[8px]"
-  placeholder="DD-MM-YYYY"
+  placeholder="DD-MM-YYYY (DOB)"
   name="DOB"
   required
   inputMode="numeric"
