@@ -303,7 +303,7 @@ export default function MenuCard() {
               <h2 className="text-[20px] font-bold text-black border-b-2 pb-5 border-[#ac804c] mb-4">{group}</h2>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
                 {items.map((product, index) => (
-                  <div key={product.id || `product-${index}`} className="flex lg:p-4 items-center">
+                  <div key={product._id || `product-${index}`} className="flex lg:p-4 items-center">
                     {product.arrays.arrayOne[0] ? <img src={`${IMAGE_BASE_URL}${product.arrays.arrayOne[0]}`} alt={product.title || "Dish"} className="min-w-[120px] min-h-[120px] max-h-[120px] max-w-[120px] object-cover rounded-full mr-4" /> : <div className="min-w-[120px] min-h-[120px] max-h-[120px] max-w-[120px] rounded-full bg-[#ffd4b22b] text-[#704828] flex items-center justify-center text-2xl font-semibold mr-4">{getInitials(product.title)}</div>}
                     <div className="flex w-full justify-between items-center w-[100%]">
                       <div className="w-[100%] relative">
