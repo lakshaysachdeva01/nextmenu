@@ -234,34 +234,27 @@ export default function MenuCard() {
   maxLength={10}
   value={formData.DOB}  // ✅ Connects DOB to formData
   onInput={(e) => {
-    let value = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+    const target = e.target as HTMLInputElement; // ✅ Type Assertion
+    let value = target.value.replace(/\D/g, ""); // ✅ Now TypeScript recognizes `value`
+    
     if (value.length > 8) value = value.slice(0, 8); // Restrict to 8 digits
   
-  const day = value.slice(0, 2);
-const month = value.slice(2, 4);
-const year = value.slice(4);
-
-    // Convert to numbers for validation
-    let dayNum = Number(day);
-    let monthNum = Number(month);
-    let yearNum = Number(year);
+    const day = value.slice(0, 2);
+    const month = value.slice(2, 4);
+    const year = value.slice(4);
   
     // Ensure valid day (1-31)
-    if (dayNum > 31) dayNum = 31;
-    if (dayNum === 0) dayNum = 1; // Prevents 00
+    if (parseInt(day) > 31) value = "31" + month + year;
+    if (day === "00") value = "01" + month + year;
   
     // Ensure valid month (1-12)
-    if (monthNum > 12) monthNum = 12;
-    if (monthNum === 0) monthNum = 1; // Prevents 00
+    if (parseInt(month) > 12) value = day + "12" + year;
+    if (month === "00") value = day + "01" + year;
   
     // Ensure valid year (up to 2025)
-    if (yearNum > 2025) yearNum = 2025;
+    if (parseInt(year) > 2025) value = day + month + "2025";
   
-    // Convert back to string with leading zeros if needed
-    let formattedValue = `${dayNum.toString().padStart(2, "0")}-${monthNum.toString().padStart(2, "0")}`;
-    if (year) formattedValue += `-${yearNum}`;
-  
-    e.target.value = formattedValue;
+    target.value = value; // ✅ Update input field
   }}
   
 />
