@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import Cookies from "js-cookie";
 
 interface Product {
   _id: number;
@@ -81,12 +80,17 @@ export default function MenuCard() {
   });
 
   useEffect(() => {
-    if (typeof window !== "undefined") { 
-      const isFormSubmitted = Cookies.get("formSubmitted"); // Get cookie
-      setShowForm(!isFormSubmitted); // Show form if cookie doesn't exist
+    if (typeof window !== "undefined") {  // Ensure it's running on the client-side
+      const isFormSubmitted = localStorage.getItem("formSubmitted");
+  
+      if (isFormSubmitted === "true") {
+        setShowForm(false);  // Hide form if already submitted
+      } else {
+        setShowForm(true);  // Show form if not submitted
+      }
     }
   }, []);
-
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -96,12 +100,12 @@ export default function MenuCard() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          websiteProjectId: WEBSITE_ID,
+          websiteProjectId: WEBSITE_ID, // Include websiteId in the payload
           strings: {
             stringOne: formData.name,
             stringTwo: formData.number,
             stringThree: formData.DOB,
-            email: formData.email,
+            email : formData.email,
             stringFour: formData.gender,
           },
         }),
@@ -111,13 +115,13 @@ export default function MenuCard() {
         throw new Error("Failed to submit form");
       }
 
-      // Set cookie after successful submission (valid for 1 year)
-      Cookies.set("formSubmitted", "true", { expires: 365, domain: ".vercel.app", path: "/" });
-
-      setShowForm(false); // Hide the form
+      // Only set localStorage if the submission is successful
+      localStorage.setItem("formSubmitted", "true");
+      setShowForm(false); // Hide the form after successful submission
     } catch (error) {
       console.error("Error submitting form:", error);
-      Cookies.remove("formSubmitted"); // Remove cookie if submission fails
+      // Clear localStorage if submission fails
+      localStorage.removeItem("formSubmitted");
     }
   };
   useEffect(() => {
@@ -223,7 +227,7 @@ export default function MenuCard() {
 >
 <div className="h-full flex justify-center items-center">
             {websiteData?.basicDetails?.logo && (
-              <img className="h-[80px] w-[120px] my-8 " src={`${IMAGE_BASE_URL}${websiteData.basicDetails.logo}`} alt="Logo" />
+              <img className="h-[80px] w-[120px]  " src={`${IMAGE_BASE_URL}${websiteData.basicDetails.logo}`} alt="Logo" />
             )}</div>
 <div className="w-full flex flex-col items-center justify-center">
             {/* Hidden input for websiteId */}
@@ -234,11 +238,11 @@ export default function MenuCard() {
               value="6667f654a9d9239927ce8743"
             />
 
-<div className="relative my-5 px-4  w-full  md:w-[400px]">
+<div className="relative my-2 px-4  w-full  md:w-[400px]">
   {/* Floating Label */}
   <label
-    className={`absolute left-7 top-1/2 transform -translate-y-1/2 text-gray-400 transition-all  duration-200 pointer-events-none
-      ${formData.name ? "text-sm top-[-1] text-gray-600 bg-white px-1 " : "text-base top-1/2"}
+    className={`absolute  left-7 top-1/2 transform -translate-y-1/2 text-gray-400 transition-all  duration-200 pointer-events-none
+      ${formData.name ? "text-sm top-[-1] text-[10px] text-gray-600 bg-white px-1 " : "text-base top-1/2"}
     `}
   >
     Full Name
@@ -254,12 +258,11 @@ export default function MenuCard() {
     className=" border border-gray-300 h-[55px] w-full p-2 pt-2 max-h-[50px] rounded-[8px] focus:outline-none focus:ring-1 focus:ring-gray-400"
   />
 </div>
-
-<div className="relative my-5 px-4  w-full  md:w-[400px]">
+<div className="relative my-2 px-4 w-full md:w-[400px]">
   {/* Floating Label for Contact Number */}
   <label
-    className={`absolute left-7 top-1/2 transform -translate-y-1/2 text-gray-400 transition-all duration-200 pointer-events-none
-      ${formData.number ? "text-sm -top-[1px] text-gray-600 bg-white px-1" : "text-base top-1/2"}
+    className={`absolute  left-7 top-1/2 transform -translate-y-1/2 text-gray-400 transition-all duration-200 pointer-events-none
+      ${!!formData.number ? "text-sm -top-[4px] text-[10px] text-gray-600 bg-white px-1" : "text-base top-1/2"}
     `}
   >
     Contact Number
@@ -279,11 +282,12 @@ export default function MenuCard() {
   />
 </div>
 
-<div className="relative my-5 px-4  w-full  md:w-[400px]">
+
+<div className="relative my-2 px-4  w-full  md:w-[400px]">
   {/* Floating Label */}
   <label
-    className={`absolute left-7 top-1/2 transform -translate-y-1/2 text-gray-400 transition-all  duration-200 pointer-events-none
-      ${formData.email ? "text-sm top-[-1] text-gray-600 bg-white px-1 " : "text-base top-1/2"}
+    className={`absolute  left-7 top-1/2 transform -translate-y-1/2 text-gray-400 transition-all  duration-200 pointer-events-none
+      ${formData.email ? "text-sm top-[-2px] text-gray-600 text-[10px] bg-white px-1 " : "text-base top-1/2"}
     `}
   >
     Email
@@ -301,11 +305,11 @@ export default function MenuCard() {
 </div>
 
 
-<div className="relative my-5 px-4  w-full  md:w-[400px]">
+<div className="relative my-2 px-4  w-full  md:w-[400px]">
   {/* Floating Label for DOB */}
   <label
-    className={`absolute left-7 top-1/2 transform -translate-y-1/2 text-gray-400 transition-all duration-200 pointer-events-none
-      ${formData.DOB ? "text-sm -top-[1px] text-gray-600 bg-white px-1" : "text-base top-1/2"}
+    className={`absolute  left-7 top-1/2 transform -translate-y-1/2 text-gray-400 transition-all duration-200 pointer-events-none
+      ${formData.DOB ? "text-sm -top-[2px] text-[10px] text-gray-600 bg-white px-1" : "text-base top-1/2"}
     `}
   >
     Date of Birth (DD-MM-YYYY)
@@ -349,11 +353,11 @@ export default function MenuCard() {
   />
 </div>
 
-<div className="relative my-5 px-4  w-full  md:w-[400px]">
+<div className="relative my-2 px-4  w-full  md:w-[400px]">
   {/* Floating Label for Gender */}
   <label
-    className={`absolute left-7 top-1/2 transform -translate-y-1/2 text-gray-400 transition-all duration-200 pointer-events-none
-      ${formData.gender ? "text-sm -top-1 text-gray-600 bg-white px-1" : "text-base top-1/2"}
+    className={`absolute  left-7 top-1/2 transform -translate-y-1/2 text-gray-400 transition-all duration-200 pointer-events-none
+      ${formData.gender ? "text-sm -top-[2px] text-[10px] text-gray-600 bg-white px-1" : "text-base top-1/2"}
     `}
   >
     Gender
