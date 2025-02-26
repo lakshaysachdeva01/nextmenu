@@ -242,7 +242,7 @@ export default function MenuCard() {
   {/* Floating Label */}
   <label
     className={`absolute  left-7 top-1/2 transform -translate-y-1/2 text-gray-400 transition-all  duration-200 pointer-events-none
-      ${formData.name ? "text-sm top-[-1] text-[10px] text-gray-600 bg-white px-1 " : "text-base top-1/2"}
+      ${formData.name ? "text-sm top-[-2] text-[10px] text-gray-600 bg-white px-1 " : "text-base top-1/2"}
     `}
   >
     Full Name
@@ -262,7 +262,7 @@ export default function MenuCard() {
   {/* Floating Label for Contact Number */}
   <label
     className={`absolute  left-7 top-1/2 transform -translate-y-1/2 text-gray-400 transition-all duration-200 pointer-events-none
-      ${!!formData.number ? "text-sm -top-[4px] text-[10px] text-gray-600 bg-white px-1" : "text-base top-1/2"}
+      ${!!formData.number ? "text-sm top-[-2px] text-[10px] text-gray-600 bg-white px-1" : "text-base top-1/2"}
     `}
   >
     Contact Number
@@ -309,7 +309,7 @@ export default function MenuCard() {
   {/* Floating Label for DOB */}
   <label
     className={`absolute  left-7 top-1/2 transform -translate-y-1/2 text-gray-400 transition-all duration-200 pointer-events-none
-      ${formData.DOB ? "text-sm -top-[2px] text-[10px] text-gray-600 bg-white px-1" : "text-base top-1/2"}
+      ${formData.DOB ? "text-sm top-[-2px] text-[10px] text-gray-600 bg-white px-1" : "text-base top-1/2"}
     `}
   >
     Date of Birth (DD-MM-YYYY)
@@ -357,7 +357,7 @@ export default function MenuCard() {
   {/* Floating Label for Gender */}
   <label
     className={`absolute  left-7 top-1/2 transform -translate-y-1/2 text-gray-400 transition-all duration-200 pointer-events-none
-      ${formData.gender ? "text-sm -top-[2px] text-[10px] text-gray-600 bg-white px-1" : "text-base top-1/2"}
+      ${formData.gender ? "text-sm top-[-2px] text-[10px] text-gray-600 bg-white px-1" : "text-base top-1/2"}
     `}
   >
     Gender
