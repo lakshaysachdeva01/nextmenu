@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import Cookies from "js-cookie";
 
 interface Product {
   _id: number;
@@ -80,17 +81,12 @@ export default function MenuCard() {
   });
 
   useEffect(() => {
-    if (typeof window !== "undefined") {  // Ensure it's running on the client-side
-      const isFormSubmitted = localStorage.getItem("formSubmitted");
-  
-      if (isFormSubmitted === "true") {
-        setShowForm(false);  // Hide form if already submitted
-      } else {
-        setShowForm(true);  // Show form if not submitted
-      }
+    if (typeof window !== "undefined") { 
+      const isFormSubmitted = Cookies.get("formSubmitted"); // Get cookie
+      setShowForm(!isFormSubmitted); // Show form if cookie doesn't exist
     }
   }, []);
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -100,12 +96,12 @@ export default function MenuCard() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          websiteProjectId: WEBSITE_ID, // Include websiteId in the payload
+          websiteProjectId: WEBSITE_ID,
           strings: {
             stringOne: formData.name,
             stringTwo: formData.number,
             stringThree: formData.DOB,
-            email : formData.email,
+            email: formData.email,
             stringFour: formData.gender,
           },
         }),
@@ -115,13 +111,13 @@ export default function MenuCard() {
         throw new Error("Failed to submit form");
       }
 
-      // Only set localStorage if the submission is successful
-      localStorage.setItem("formSubmitted", "true");
-      setShowForm(false); // Hide the form after successful submission
+      // Set cookie after successful submission (valid for 1 year)
+      Cookies.set("formSubmitted", "true", { expires: 365, domain: ".vercel.app", path: "/" });
+
+      setShowForm(false); // Hide the form
     } catch (error) {
       console.error("Error submitting form:", error);
-      // Clear localStorage if submission fails
-      localStorage.removeItem("formSubmitted");
+      Cookies.remove("formSubmitted"); // Remove cookie if submission fails
     }
   };
   useEffect(() => {
@@ -229,7 +225,7 @@ export default function MenuCard() {
             {websiteData?.basicDetails?.logo && (
               <img className="h-[80px] w-[120px] my-8 " src={`${IMAGE_BASE_URL}${websiteData.basicDetails.logo}`} alt="Logo" />
             )}</div>
-<div className="w-full">
+<div className="w-full flex flex-col items-center justify-center">
             {/* Hidden input for websiteId */}
             <input
               type="hidden"
@@ -382,7 +378,7 @@ export default function MenuCard() {
 
 
 
-<div className="w-full px-4 my-6 flex items-start"  >
+<div className="w-full px-4 my-6 flex items-start md:max-w-[400px]"  >
             <button type="submit" className="bg-red-900  h-[55px] w-full  p-2 rounded-[8px] md:w-[400px] text-white uppercase font-[600]">
               Proceed
             </button></div></div>
