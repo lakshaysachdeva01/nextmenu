@@ -132,10 +132,11 @@ export default function MenuCard() {
     }
     return () => document.body.classList.remove("overflow-hidden");
   }, [isOpen]);
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+  
 
  
 
