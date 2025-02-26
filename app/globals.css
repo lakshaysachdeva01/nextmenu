@@ -23,3 +23,23 @@
     display: none; /* Chrome, Safari, Opera */
   }
 
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 1px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #999; /* Scrollbar color */
+    border-radius: 5px;
+    display: none;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Track color */
+    display: none !important;
+  }
+  
+  /* Firefox */
+  .custom-scrollbar {
+    scrollbar-width: 5px !important;
+   
+  }
