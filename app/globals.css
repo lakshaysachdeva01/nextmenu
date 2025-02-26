@@ -43,3 +43,25 @@
     scrollbar-width: 5px !important;
    
   }
+
+  input:-internal-autofill-selected {
+    background-color: white !important;;
+  }
+
+  /* Custom Dropdown Options Styling */
+.custom-dropdown option {
+  background: white !important;
+  color: black;
+  padding: 10px;
+  font-size: 16px;
+}
+
+/* Hover & Focus Effects */
+.custom-dropdown option:hover {
+  background: #f3f4f6; /* Light gray on hover */
+}
+
+/* Selected Option Styling */
+.custom-dropdown option:checked {
+  background: white !important; /* Slightly darker background for selected */
+}

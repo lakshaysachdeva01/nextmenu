@@ -75,8 +75,22 @@ export default function MenuCard() {
     name: "",
     number: "",
     DOB: "",
+    email: "",
+    gender: "",
   });
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {  // Ensure it's running on the client-side
+      const isFormSubmitted = localStorage.getItem("formSubmitted");
+  
+      if (isFormSubmitted === "true") {
+        setShowForm(false);  // Hide form if already submitted
+      } else {
+        setShowForm(true);  // Show form if not submitted
+      }
+    }
+  }, []);
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -91,6 +105,8 @@ export default function MenuCard() {
             stringOne: formData.name,
             stringTwo: formData.number,
             stringThree: formData.DOB,
+            email : formData.email,
+            stringFour: formData.gender,
           },
         }),
       });
@@ -121,13 +137,7 @@ export default function MenuCard() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  useEffect(() => {
-    // Check local storage to see if the form has already been submitted
-    const isFormSubmitted = localStorage.getItem("formSubmitted");
-    if (!isFormSubmitted || isFormSubmitted !== "true") {
-      setShowForm(true); // Show the form if it hasn't been submitted or if submission failed
-    }
-  }, []);
+ 
 
   useEffect(() => {
     async function fetchData() {
@@ -210,14 +220,15 @@ export default function MenuCard() {
        {showForm && (
         <div className="fixed w-full h-full bg-[rgba(0,0,0,0.8)] top-0 left-0 z-50 flex items-center justify-center">
           <form
-            id="menuform"
-            className="bg-white flex flex-col pt-5 pb-2 px-2 md:py-8 md:px-6 items-center rounded-[18px] relative"
-            onSubmit={handleSubmit}
-          >
+  id="menuform"
+  className="bg-white flex flex-col pt-5 pb-2 px-2 md:py-8 md:px-6 h-[96%] w-[100%] m-2 items-center rounded-[25px] relative overflow-y-auto "
+  onSubmit={handleSubmit}
+>
+<div className="h-full flex justify-center items-center">
             {websiteData?.basicDetails?.logo && (
-              <img className="h-[80px] w-[120px] mb-4" src={`${IMAGE_BASE_URL}${websiteData.basicDetails.logo}`} alt="Logo" />
-            )}
-
+              <img className="h-[80px] w-[120px] my-8 " src={`${IMAGE_BASE_URL}${websiteData.basicDetails.logo}`} alt="Logo" />
+            )}</div>
+<div className="w-full">
             {/* Hidden input for websiteId */}
             <input
               type="hidden"
@@ -226,71 +237,154 @@ export default function MenuCard() {
               value="6667f654a9d9239927ce8743"
             />
 
-            <input
-              type="text"
-              className="border border-gray-300 m-2 h-[55px] w-[300px] md:w-[350px] p-2 rounded-[8px]"
-              placeholder="Full Name"
-              name="name"
-              required
-              value={formData.name}
-              onChange={handleChange}
-            />
-            <input
-              type="tel"
-              className="border border-gray-300 m-2 h-[55px] w-[300px] md:w-[350px] p-2 rounded-[8px]"
-              placeholder="Contact Number"
-              name="number"
-              required
-              value={formData.number}
-              onChange={handleChange}
-              inputMode="numeric"
-              maxLength={10}
-              minLength={10}
-            />
-      <input
-  type="tel"
-  className="border border-gray-300 m-2 h-[55px] w-[300px] md:w-[350px] p-2 rounded-[8px]"
-  placeholder="DD-MM-YYYY (DOB)"
-  name="DOB"
-  required
-  inputMode="numeric"
-  maxLength={10}
-  value={formData.DOB} // ✅ Keep input controlled
-  onChange={(e) => {
-    let value = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+<div className="relative my-5 px-4  w-full  md:w-[400px]">
+  {/* Floating Label */}
+  <label
+    className={`absolute left-7 top-1/2 transform -translate-y-1/2 text-gray-400 transition-all  duration-200 pointer-events-none
+      ${formData.name ? "text-sm top-[-1] text-gray-600 bg-white px-1 " : "text-base top-1/2"}
+    `}
+  >
+    Full Name
+  </label>
 
-    if (value.length > 8) value = value.slice(0, 8); // Restrict to 8 digits
+  {/* Input Field */}
+  <input
+    type="text"
+    name="name"
+    value={formData.name}
+    onChange={handleChange}
+    required
+    className=" border border-gray-300 h-[55px] w-full p-2 pt-2 max-h-[50px] rounded-[8px] focus:outline-none focus:ring-1 focus:ring-gray-400"
+  />
+</div>
 
-    let day = value.slice(0, 2);
-    let month = value.slice(2, 4);
-    let year = value.slice(4);
+<div className="relative my-5 px-4  w-full  md:w-[400px]">
+  {/* Floating Label for Contact Number */}
+  <label
+    className={`absolute left-7 top-1/2 transform -translate-y-1/2 text-gray-400 transition-all duration-200 pointer-events-none
+      ${formData.number ? "text-sm -top-[1px] text-gray-600 bg-white px-1" : "text-base top-1/2"}
+    `}
+  >
+    Contact Number
+  </label>
 
-    // Ensure valid day (1-31)
-    if (parseInt(day) > 31) day = "31";
-    if (day === "00") day = "01";
+  {/* Contact Number Input */}
+  <input
+    type="tel"
+    name="number"
+    required
+    value={formData.number}
+    onChange={handleChange}
+    inputMode="numeric"
+    maxLength={10}
+    minLength={10}
+    className="border border-gray-300 h-[55px] w-full p-2 pt-2 rounded-[8px] focus:outline-none focus:ring-1 focus:ring-gray-400"
+  />
+</div>
 
-    // Ensure valid month (1-12)
-    if (parseInt(month) > 12) month = "12";
-    if (month === "00") month = "01";
+<div className="relative my-5 px-4  w-full  md:w-[400px]">
+  {/* Floating Label */}
+  <label
+    className={`absolute left-7 top-1/2 transform -translate-y-1/2 text-gray-400 transition-all  duration-200 pointer-events-none
+      ${formData.email ? "text-sm top-[-1] text-gray-600 bg-white px-1 " : "text-base top-1/2"}
+    `}
+  >
+    Email
+  </label>
 
-    // Ensure valid year (up to 2025)
-    if (year.length === 4 && parseInt(year) > 2025) year = "2025";
-
-    let formattedValue = day;
-    if (month) formattedValue += `-${month}`;
-    if (year) formattedValue += `-${year}`;
-
-    setFormData((prev) => ({ ...prev, DOB: formattedValue })); // ✅ Update State
-  }}
-/>
-
-
+  {/* Input Field */}
+  <input
+    type="email"
+    name="email"
+    value={formData.email}
+    onChange={handleChange}
+    required
+    className="border border-gray-300 h-[55px] w-full p-2 pt-2 max-h-[50px] rounded-[8px] focus:outline-none focus:ring-1 focus:ring-gray-400"
+  />
+</div>
 
 
+<div className="relative my-5 px-4  w-full  md:w-[400px]">
+  {/* Floating Label for DOB */}
+  <label
+    className={`absolute left-7 top-1/2 transform -translate-y-1/2 text-gray-400 transition-all duration-200 pointer-events-none
+      ${formData.DOB ? "text-sm -top-[1px] text-gray-600 bg-white px-1" : "text-base top-1/2"}
+    `}
+  >
+    Date of Birth (DD-MM-YYYY)
+  </label>
 
-            <button type="submit" className="bg-green-500 m-2 h-[55px] w-[300px] p-2 rounded-[8px] md:w-[350px] text-white uppercase font-[600]">
+  {/* Date of Birth Input */}
+  <input
+    type="tel"
+    name="DOB"
+    required
+    inputMode="numeric"
+    maxLength={10}
+    value={formData.DOB}
+    onChange={(e) => {
+      let value = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+
+      if (value.length > 8) value = value.slice(0, 8); // Restrict to 8 digits
+
+      let day = value.slice(0, 2);
+      let month = value.slice(2, 4);
+      let year = value.slice(4);
+
+      // Ensure valid day (1-31)
+      if (parseInt(day) > 31) day = "31";
+      if (day === "00") day = "01";
+
+      // Ensure valid month (1-12)
+      if (parseInt(month) > 12) month = "12";
+      if (month === "00") month = "01";
+
+      // Ensure valid year (up to 2025)
+      if (year.length === 4 && parseInt(year) > 2025) year = "2025";
+
+      let formattedValue = day;
+      if (month) formattedValue += `-${month}`;
+      if (year) formattedValue += `-${year}`;
+
+      setFormData((prev) => ({ ...prev, DOB: formattedValue })); // ✅ Update State
+    }}
+    className="border border-gray-300 h-[50px] w-full p-2 pt-2 rounded-[8px] focus:outline-none focus:ring-1 focus:ring-gray-400"
+  />
+</div>
+
+<div className="relative my-5 px-4  w-full  md:w-[400px]">
+  {/* Floating Label for Gender */}
+  <label
+    className={`absolute left-7 top-1/2 transform -translate-y-1/2 text-gray-400 transition-all duration-200 pointer-events-none
+      ${formData.gender ? "text-sm -top-1 text-gray-600 bg-white px-1" : "text-base top-1/2"}
+    `}
+  >
+    Gender
+  </label>
+
+  {/* Select Dropdown for Gender */}
+  <select
+    name="gender"
+    value={formData.gender}
+    onChange={handleChange}
+    required
+    className="border border-gray-300 h-[55px] w-full p-2 rounded-[8px] appearance-none focus:outline-none focus:ring-1 focus:ring-gray-400 bg-white"
+  >
+    <option value="" hidden></option>
+    <option value="male">Male</option>
+    <option value="female">Female</option>
+    <option value="other">Other</option>
+    <option value="prefer_not_to_disclose">Prefer not to disclose</option>
+  </select>
+</div>
+
+
+
+
+<div className="w-full px-4 my-6 flex items-start"  >
+            <button type="submit" className="bg-red-900  h-[55px] w-full  p-2 rounded-[8px] md:w-[400px] text-white uppercase font-[600]">
               Proceed
-            </button>
+            </button></div></div>
           </form>
         </div>
       )}
