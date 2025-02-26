@@ -152,13 +152,13 @@ export default function MenuCard() {
     }
   }, [categoryId]);
   
-  const getProductCount = (id) => {
+  const getProductCount = (id: string | null) => {
     if (!id) return products?.length || 0; // If id is null, return total products count
     return products?.filter((item) => item?.subCategory?._id === id).length || 0;
   };
   
 
-  const handleCategoryClick = (id) => {
+  const handleCategoryClick = (id: string | null) => {
     setSelectedSubCategoryId(id);
     setIsOpen(false); // Close menu after clicking a subcategory
   };
