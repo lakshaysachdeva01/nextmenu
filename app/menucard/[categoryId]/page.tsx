@@ -203,6 +203,17 @@ export default function MenuCard() {
   }, [lastScrollTop]);
 
   useEffect(() => {
+    if (showForm) {
+      document.body.style.overflow = "hidden"; // Disable scrolling
+    } else {
+      document.body.style.overflow = ""; // Restore scrolling
+    }
+  
+    return () => {
+      document.body.style.overflow = ""; // Cleanup when component unmounts
+    };
+  }, [showForm]);
+  useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 300) {
         setIsFixed(true);
@@ -217,19 +228,20 @@ export default function MenuCard() {
   }, []);
 
   return (
-    <div className="container mx-auto bg-white">
+    <div className="container mx-auto bg-white ">
        {showForm && (
-        <div className="fixed w-full h-full bg-[rgba(0,0,0,0.8)] top-0 left-0 z-50 flex items-center justify-center">
+        <div className="fixed w-full h-full bg-[rgba(0,0,0,0.8)] top-0 left-0 z-50 flex items-center justify-center ">
           <form
   id="menuform"
-  className="bg-white flex flex-col pt-5 pb-2 px-2 md:py-8 md:px-6 h-[96%] w-[100%] m-2 items-center rounded-[25px] relative overflow-y-auto "
+  className="flex h-[100%] w-[100%] flex-col  md:py-8 md:px-6  items-center  relative overflow-y-auto p-2 "
   onSubmit={handleSubmit}
 >
-<div className="h-full flex justify-center items-center">
+<div className="w-full h-[84%] flex flex-col items-center justify-center m-3 py-8 rounded-[20px] bg-white">
+<div className="h-full flex justify-center items-center bg-white ">
             {websiteData?.basicDetails?.logo && (
               <img className="h-[80px] w-[120px]  " src={`${IMAGE_BASE_URL}${websiteData.basicDetails.logo}`} alt="Logo" />
             )}</div>
-<div className="w-full flex flex-col items-center justify-center">
+
             {/* Hidden input for websiteId */}
             <input
               type="hidden"
@@ -255,7 +267,7 @@ export default function MenuCard() {
     value={formData.name}
     onChange={handleChange}
     required
-    className=" border border-gray-300 h-[55px] w-full p-2 pt-2 max-h-[50px] rounded-[8px] focus:outline-none focus:ring-1 focus:ring-gray-400"
+    className=" border border-gray-300 h-[50px] w-full p-2 pt-2 max-h-[50px] rounded-[8px] focus:outline-none focus:ring-1 focus:ring-gray-400"
   />
 </div>
 <div className="relative my-2 px-4 w-full md:w-[400px]">
@@ -278,7 +290,7 @@ export default function MenuCard() {
     inputMode="numeric"
     maxLength={10}
     minLength={10}
-    className="border border-gray-300 h-[55px] w-full p-2 pt-2 rounded-[8px] focus:outline-none focus:ring-1 focus:ring-gray-400"
+    className="border border-gray-300 h-[50px] w-full p-2 pt-2 rounded-[8px] focus:outline-none focus:ring-1 focus:ring-gray-400"
   />
 </div>
 
@@ -369,7 +381,7 @@ export default function MenuCard() {
     value={formData.gender}
     onChange={handleChange}
     required
-    className="border border-gray-300 h-[55px] w-full p-2 rounded-[8px] appearance-none focus:outline-none focus:ring-1 focus:ring-gray-400 bg-white"
+    className="border border-gray-300 h-[50px] w-full p-2 rounded-[8px] appearance-none focus:outline-none focus:ring-1 focus:ring-gray-400 bg-white"
   >
     <option value="" hidden></option>
     <option value="male">Male</option>
@@ -378,14 +390,14 @@ export default function MenuCard() {
     <option value="prefer_not_to_disclose">Prefer not to disclose</option>
   </select>
 </div>
+</div>
 
 
 
-
-<div className="w-full px-4 my-6 flex items-start md:max-w-[400px]"  >
-            <button type="submit" className="bg-red-900  h-[55px] w-full  p-2 rounded-[8px] md:w-[400px] text-white uppercase font-[600]">
+<div className="absolute bottom-0 rounded-t-[20px] bg-white w-full h-[13%] p-4 pb-6  flex items-start md:max-w-[400px]"  >
+            <button type="submit" className="bg-red-900  h-[50px] w-full  p-2 rounded-[8px] md:w-[400px] text-white uppercase font-[600]">
               Proceed
-            </button></div></div>
+            </button></div>
           </form>
         </div>
       )}
