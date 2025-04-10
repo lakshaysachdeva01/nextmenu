@@ -68,7 +68,7 @@ export default function MenuCard() {
   const [isFixed, setIsFixed] = useState(false);
 
   const [expandedProducts, setExpandedProducts] = useState<Record<number, boolean>>({});
-  const [websiteData, setWebsiteData] = useState<{ basicDetails?: { logo?: string } } | null>(null);
+
   const [isOpen, setIsOpen] = useState(false);
    useEffect(() => {
     if (isOpen) {
@@ -79,14 +79,6 @@ export default function MenuCard() {
     return () => document.body.classList.remove("overflow-hidden");
   }, [isOpen]);
  
-
-  useEffect(() => {
-    async function fetchData() {
-      const websiteDetails = await fetchWebsiteDetails();
-      setWebsiteData(websiteDetails);
-    }
-    fetchData();
-  }, []);
 
   const toggleReadMore = (productId: number) => {
     setExpandedProducts((prev) => ({

@@ -6,6 +6,18 @@
 //   DOB: "",
 //   gender: "",
 // });
+const [websiteData, setWebsiteData] = useState<{ basicDetails?: { logo?: string } } | null>(null);
+
+
+useEffect(() => {
+  async function fetchData() {
+    const websiteDetails = await fetchWebsiteDetails();
+    setWebsiteData(websiteDetails);
+  }
+  fetchData();
+}, []);
+
+
 
 // const [focused, setFocused] = useState({
 //   name: false,
