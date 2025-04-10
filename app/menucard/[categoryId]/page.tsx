@@ -66,32 +66,32 @@ export default function MenuCard() {
   const [isSearchVisible, setIsSearchVisible] = useState(false);
   const [lastScrollTop, setLastScrollTop] = useState(0);
   const [isFixed, setIsFixed] = useState(false);
-  const [showForm, setShowForm] = useState(false);
+  // const [showForm, setShowForm] = useState(false);
   const [expandedProducts, setExpandedProducts] = useState<Record<number, boolean>>({});
   const [websiteData, setWebsiteData] = useState<{ basicDetails?: { logo?: string } } | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   // Define formData state
-  const [formData, setFormData] = useState({
-    name: "",
-    number: "",
-    DOB: "",
-    gender: "",
-  });
+  // const [formData, setFormData] = useState({
+  //   name: "",
+  //   number: "",
+  //   DOB: "",
+  //   gender: "",
+  // });
 
-  const [focused, setFocused] = useState({
-    name: false,
-    number: false,
-    DOB: false,
-    gender: false,
-  });
+  // const [focused, setFocused] = useState({
+  //   name: false,
+  //   number: false,
+  //   DOB: false,
+  //   gender: false,
+  // });
 
-  const handleFocus = (field) => {
-    setFocused((prev) => ({ ...prev, [field]: true }));
-  };
+  // const handleFocus = (field) => {
+  //   setFocused((prev) => ({ ...prev, [field]: true }));
+  // };
 
-  const handleBlur = (field) => {
-    setFocused((prev) => ({ ...prev, [field]: !!formData[field] }));
-  };
+  // const handleBlur = (field) => {
+  //   setFocused((prev) => ({ ...prev, [field]: !!formData[field] }));
+  // };
 
   // useEffect(() => {
   //   if (typeof window !== "undefined") {  // Ensure it's running on the client-side
