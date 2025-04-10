@@ -1,0 +1,146 @@
+  {showForm && (
+        <div className="fixed w-full h-full bg-[rgba(0,0,0,0.8)] top-0 left-0 z-50 flex items-center justify-center">
+          <form
+  id="menuform"
+  className="bg-white flex flex-col pt-5 pb-2 px-2 md:py-8 md:px-6 h-[96%] w-[100%] m-2 justify-evenly items-center rounded-[25px] relative overflow-y-auto "
+  onSubmit={handleSubmit}
+>
+<div className=" flex justify-center items-center">
+            {websiteData?.basicDetails?.logo && (
+              <img className="h-[80px] w-[120px] mb-1 mt-6 " src={`${IMAGE_BASE_URL}${websiteData.basicDetails.logo}`} alt="Logo" />
+            )}</div>
+<div className="w-full flex flex-col items-center justify-center">
+            {/* Hidden input for websiteId */}
+            <input
+              type="hidden"
+              id="websiteId"
+              name="websiteId"
+              value="6667f654a9d9239927ce8743"
+            />
+
+<div className="relative my-3 px-4 w-full md:w-[400px]">
+        <label
+          className={`absolute left-7 top-1/2 transform -translate-y-1/2 text-gray-400 transition-all duration-200 pointer-events-none 
+            ${formData.name || focused.name ? "top-[-1px] text-[12px] text-gray-600 bg-white px-1" : "text-base top-1/2"}
+          `}
+        >
+          Full Name
+        </label>
+        <input
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          onFocus={() => handleFocus("name")}
+          onBlur={() => handleBlur("name")}
+          required
+          className="border border-gray-300 h-[50px] w-full p-2 pt-2 rounded-[8px] focus:outline-none focus:ring-1 focus:ring-gray-800"
+        />
+      </div>
+
+      {/* Contact Number */}
+      <div className="relative my-3 px-4 w-full md:w-[400px]">
+        <label
+          className={`absolute left-7 top-1/2 transform -translate-y-1/2 text-gray-400 transition-all duration-200 pointer-events-none 
+            ${formData.number || focused.number ? "top-[-1px] text-[12px] text-gray-600 bg-white px-1" : "text-base top-1/2"}
+          `}
+        >
+          Contact Number
+        </label>
+        <input
+          type="tel"
+          name="number"
+          value={formData.number}
+          onChange={handleChange}
+          onFocus={() => handleFocus("number")}
+          onBlur={() => handleBlur("number")}
+          required
+          maxLength={10}
+          inputMode="numeric"
+          className="border border-gray-300 h-[50px] w-full p-2 pt-2 rounded-[8px] focus:outline-none focus:ring-1 focus:ring-gray-800"
+        />
+      </div>
+
+   {/* Gender (Radio Buttons) */}
+   <div className="relative my-3 px-4 w-full  md:w-[400px]">
+ 
+
+ {/* Radio Buttons */}
+ <div className="mt-3 mb-3 flex gap-4 items-center justify-around">
+   <label className="flex items-center gap-2">
+     <input
+       type="radio"
+       name="gender"
+       value="male"
+       checked={formData.gender === "male"}
+       onChange={handleChange}
+       required
+       className="w-4 h-4 accent-gray-800"
+     />
+     Male
+   </label>
+
+   <label className="flex items-center gap-2">
+     <input
+       type="radio"
+       name="gender"
+       value="female"
+       checked={formData.gender === "female"}
+       onChange={handleChange}
+       required
+       className="w-4 h-4 accent-gray-800"
+     />
+     Female
+   </label>
+
+   <label className="flex items-center gap-2">
+     <input
+       type="radio"
+       name="gender"
+       value="other"
+       checked={formData.gender === "other"}
+       onChange={handleChange}
+       required
+       className="w-4 h-4 accent-gray-800"
+     />
+     Other
+   </label>
+ </div>
+</div>
+
+      {/* Date of Birth */}
+      <div className="relative my-3 px-4 w-full md:w-[400px]">
+        <label
+          className={`absolute left-7 top-1/2 transform -translate-y-1/2 text-gray-400 transition-all duration-200 pointer-events-none 
+            ${formData.DOB || focused.DOB ? "top-[-1px] text-[12px] text-gray-600 bg-white px-1" : "text-base top-1/2"}
+          `}
+        >
+          Date of Birth (DD-MM-YYYY)
+        </label>
+        <input
+          type="tel"
+          name="DOB"
+          value={formData.DOB}
+          onChange={handleChange}
+          onFocus={() => handleFocus("DOB")}
+          onBlur={() => handleBlur("DOB")}
+          required
+          inputMode="numeric"
+          maxLength={10}
+          className="border border-gray-300 h-[50px] w-full p-2 pt-2 rounded-[8px] focus:outline-none focus:ring-1 focus:ring-gray-800"
+        />
+      </div>
+
+  
+
+</div>
+
+
+
+<div className="w-full px-4 my-6 flex items-start md:max-w-[400px]"  >
+            <button type="submit" className="bg-[#ac804c] h-[50px] w-full  p-2 rounded-[8px] md:w-[400px] text-white uppercase font-[600]">
+              Proceed
+            </button></div>
+          </form>
+        </div>
+      )}
