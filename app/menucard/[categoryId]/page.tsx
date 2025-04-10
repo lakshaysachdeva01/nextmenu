@@ -66,79 +66,11 @@ export default function MenuCard() {
   const [isSearchVisible, setIsSearchVisible] = useState(false);
   const [lastScrollTop, setLastScrollTop] = useState(0);
   const [isFixed, setIsFixed] = useState(false);
-  // const [showForm, setShowForm] = useState(false);
+
   const [expandedProducts, setExpandedProducts] = useState<Record<number, boolean>>({});
   const [websiteData, setWebsiteData] = useState<{ basicDetails?: { logo?: string } } | null>(null);
   const [isOpen, setIsOpen] = useState(false);
-  // Define formData state
-  // const [formData, setFormData] = useState({
-  //   name: "",
-  //   number: "",
-  //   DOB: "",
-  //   gender: "",
-  // });
-
-  // const [focused, setFocused] = useState({
-  //   name: false,
-  //   number: false,
-  //   DOB: false,
-  //   gender: false,
-  // });
-
-  // const handleFocus = (field) => {
-  //   setFocused((prev) => ({ ...prev, [field]: true }));
-  // };
-
-  // const handleBlur = (field) => {
-  //   setFocused((prev) => ({ ...prev, [field]: !!formData[field] }));
-  // };
-
-  // useEffect(() => {
-  //   if (typeof window !== "undefined") {  // Ensure it's running on the client-side
-  //     const isFormSubmitted = localStorage.getItem("formSubmitted");
-  
-  //     if (isFormSubmitted === "true") {
-  //       setShowForm(false);  // Hide form if already submitted
-  //     } else {
-  //       setShowForm(true);  // Show form if not submitted
-  //     }
-  //   }
-  // }, []);
-  
-  // const handleSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   try {
-  //     const response = await fetch(`${API_BASE_URL}/website/service-enquiry/create-service-enquiry`, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         websiteProjectId: WEBSITE_ID, // Include websiteId in the payload
-  //         strings: {
-  //           stringOne: formData.name,
-  //           stringTwo: formData.number,
-  //           stringThree: formData.DOB,
-  //           email : formData.email,
-  //           stringFour: formData.gender,
-  //         },
-  //       }),
-  //     });
-
-  //     if (!response.ok) {
-  //       throw new Error("Failed to submit form");
-  //     }
-
-  //     // Only set localStorage if the submission is successful
-  //     localStorage.setItem("formSubmitted", "true");
-  //     setShowForm(false); // Hide the form after successful submission
-  //   } catch (error) {
-  //     console.error("Error submitting form:", error);
-  //     // Clear localStorage if submission fails
-  //     localStorage.removeItem("formSubmitted");
-  //   }
-  // };
-  useEffect(() => {
+   useEffect(() => {
     if (isOpen) {
       document.body.classList.add("overflow-hidden");
     } else {
@@ -146,12 +78,6 @@ export default function MenuCard() {
     }
     return () => document.body.classList.remove("overflow-hidden");
   }, [isOpen]);
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-  
-
  
 
   useEffect(() => {
@@ -187,18 +113,6 @@ export default function MenuCard() {
     setSelectedSubCategoryId(id);
     setIsOpen(false); // Close menu after clicking a subcategory
   };
-
-  useEffect(() => {
-    if (showForm) {
-      document.body.style.overflow = "hidden"; // Disable scrolling
-    } else {
-      document.body.style.overflow = ""; // Restore scrolling
-    }
-  
-    return () => {
-      document.body.style.overflow = ""; // Cleanup when component unmounts
-    };
-  }, [showForm]);
 
   const filteredProducts = products.filter((product) =>
     (!showVegOnly || product.featureType === "666a87cda9d9239927d47193") &&
