@@ -21,19 +21,7 @@ const API_BASE_URL = "https://api.webbuilder.technolitics.com/api/v1/website-bui
 const WEBSITE_ID = "6667f654a9d9239927ce8743";
 const IMAGE_BASE_URL = "https://technolitics-s3-bucket.s3.ap-south-1.amazonaws.com/websitebuilder-s3-bucket/";
 
-async function fetchWebsiteDetails() {
-  try {
-    const response = await fetch(`https://api.webbuilder.technolitics.com/api/v1/website-builder/website/auth/get-website-by-uid/PRJ00012`);
-    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
-    const data = await response.json();
-    console.log("Website Data:", data); // Debugging
-    return data.data || {};
-  } catch (error) {
-    console.error("Error fetching website details:", error);
-    return {};
-  }
-}
 
 async function fetchProducts(categoryId: string) {
   const response = await fetch(`${API_BASE_URL}/website/product-management/get-all-products/${WEBSITE_ID}?categories=${categoryId}`);

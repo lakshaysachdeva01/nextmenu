@@ -16,7 +16,19 @@ useEffect(() => {
   }
   fetchData();
 }, []);
+async function fetchWebsiteDetails() {
+  try {
+    const response = await fetch(`https://api.webbuilder.technolitics.com/api/v1/website-builder/website/auth/get-website-by-uid/PRJ00012`);
+    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
+    const data = await response.json();
+    console.log("Website Data:", data); // Debugging
+    return data.data || {};
+  } catch (error) {
+    console.error("Error fetching website details:", error);
+    return {};
+  }
+}
 
 
 // const [focused, setFocused] = useState({
